@@ -1,0 +1,31 @@
+{
+  "environment": "production",
+  "urls": {
+    "base": "https://my.orangehrmlive.com",
+    "api": "https://api.orangehrm.com/v1",
+    "admin": "https://admin.orangehrm.com"
+  },
+  "users": {
+    "admin": {
+      "username": "SystemAdmin",
+      "password": "securePassword123!",
+      "role": "Administrator"
+    },
+    "ess": {
+      "username": "EmployeeUser",
+      "password": "userPassword456!",
+      "role": "ESS User"
+    }
+  },
+  "timeouts": {
+    "page_load": 45,
+    "element": 20,
+    "script": 15,
+    "command": 90
+  },
+  "features": {
+    "screenshots": true,
+    "video": false,
+    "logs": true
+  }
+}
