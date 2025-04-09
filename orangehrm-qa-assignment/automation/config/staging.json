@@ -1,0 +1,31 @@
+{
+  "environment": "staging",
+  "urls": {
+    "base": "https://opensource-demo.orangehrmlive.com",
+    "api": "https://api.orangehrm.com/staging/v1",
+    "admin": "https://admin.orangehrm.com/staging"
+  },
+  "users": {
+    "admin": {
+      "username": "Admin",
+      "password": "admin123",
+      "role": "Administrator"
+    },
+    "ess": {
+      "username": "Alice",
+      "password": "alice123",
+      "role": "ESS User"
+    }
+  },
+  "timeouts": {
+    "page_load": 30,
+    "element": 15,
+    "script": 10,
+    "command": 60
+  },
+  "features": {
+    "screenshots": true,
+    "video": false,
+    "logs": true
+  }
+}
