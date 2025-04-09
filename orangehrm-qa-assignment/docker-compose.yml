@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  tests:
+    build: .
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=orangehrm
+      - DB_USER=postgres
+      - DB_PASSWORD=test
+      - API_BASE_URL=http://api:8000
+      - SELENIUM_REMOTE_URL=http://selenium-hub:4444/wd/hub
+    volumes:
+      - ./results:/app/results
+    depends_on:
+      postgres:
+        condition: service_healthy
+      api:
+        condition: service_started
+      selenium-hub:
+        condition: service_healthy
+
+  selenium-hub:
+    image: selenium/hub:4.1.0
+    ports:
+      - "4444:4444"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  chrome:
+    image: selenium/node-chrome:4.1.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: orangehrm
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    image: orangehrm/orangehrm:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:test@postgres:5432/orangehrm
+
+volumes:
+  postgres_data:
