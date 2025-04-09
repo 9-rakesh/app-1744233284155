@@ -1,0 +1,38 @@
+{
+  "base_url": "http://orangehrm:8080",
+  "api_url": "http://api:8000",
+  "db_config": {
+    "host": "postgres",
+    "port": 5432,
+    "name": "orangehrm",
+    "user": "postgres",
+    "password": "test",
+    "max_connections": 5
+  },
+  "selenium": {
+    "hub_url": "http://selenium-hub:4444/wd/hub",
+    "browsers": ["chrome", "firefox"],
+    "timeout": 30,
+    "headless": true,
+    "video_capture": false
+  },
+  "users": {
+    "admin": {
+      "username": "admin",
+      "password": "admin123",
+      "role": "Administrator"
+    },
+    "ess": {
+      "username": "testuser",
+      "password": "Test1234",
+      "role": "ESS"
+    }
+  },
+  "test_data": {
+    "employee": {
+      "first_name": "Test",
+      "last_name": "Employee",
+      "id": "E1001"
+    }
+  }
+}
